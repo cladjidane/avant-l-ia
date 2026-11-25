@@ -17,6 +17,21 @@ Avant de coller un mail, un devis ou un tableau dans ChatGPT, Claude, Gemini ou 
 
 Tout se passe dans votre navigateur. Votre texte n'est envoyé à aucun serveur.
 
+### Comment ça marche
+
+La page est hébergée sur GitHub Pages, qui sert seulement des fichiers et ne fait aucun calcul. Le calcul se fait dans votre navigateur, avec le processeur de votre ordinateur.
+
+La page contient le code de l'outil et un moteur de calcul de 27 Mo, ONNX Runtime. Ce moteur fait tourner les modèles d'IA. Il est compilé en WebAssembly, un format que les navigateurs récents exécutent presque aussi vite qu'un programme installé.
+
+Le modèle qui repère les noms n'est pas dans la page. C'est `Xenova/camembert-ner`, un modèle français hébergé sur Hugging Face : https://huggingface.co/Xenova/camembert-ner. Votre navigateur le télécharge la première fois que vous choisissez la façon « Complète », puis il le garde. Seul le modèle fait le trajet, de Hugging Face vers votre navigateur. Votre texte reste dans l'onglet.
+
+Une règle de sécurité inscrite dans la page interdit au navigateur de joindre un autre site que l'outil lui-même et Hugging Face. Vous pouvez le vérifier :
+
+1. Ouvrez l'outil.
+2. Ouvrez les outils de développement du navigateur : Cmd+Option+I sur Mac, F12 sur Windows.
+3. Allez dans l'onglet « Réseau ».
+4. Collez un texte et lancez le repérage. Aucune requête ne part avec votre texte.
+
 ### Comment s'en servir
 
 1. Ouvrez l'outil. Collez votre texte dans la grande zone, ou glissez un fichier : .txt, .md, .csv, .docx, .xlsx ou .pdf (un PDF scanné ne contient pas de texte lisible).
