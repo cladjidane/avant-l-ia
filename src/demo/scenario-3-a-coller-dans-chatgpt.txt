@@ -1,0 +1,10 @@
+À partir de ce compte rendu, rédige un mail de proposition commerciale à [PERSONNE_1] pour décrocher le renouvellement du contrat. Garde les éléments entre crochets tels quels.
+
+Compte rendu du rendez-vous avec la [ENTREPRISE_1], le [DATE_1]
+
+Présents : [PERSONNE_1] (directeur), [PERSONNE_2] (responsable achats), et moi.
+La biscuiterie veut renouveler son contrat d'emballages pour 2027. Volume annoncé : 40 000 boîtes.
+Notre prix actuel est de [MONTANT_1] la boîte. Ils ont une offre concurrente à [MONTANT_2].
+Nous pouvons descendre à [MONTANT_3] en gardant 18 % de marge. En dessous, nous perdons de l'argent.
+[PERSONNE_1] signera avant le [DATE_2] si nous ajoutons la livraison gratuite à [LIEU_1].
+Prochain rendez-vous dans leurs locaux, [ADRESSE_1].

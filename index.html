@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="description" content="Masquez les informations confidentielles d'un texte ou d'un document avant de l'envoyer à une IA, puis remettez les vrais noms dans sa réponse. Tout se passe sur votre ordinateur." />
+    <title>Avant l'IA</title>
+    <link rel="icon" type="image/svg+xml" href="/src/assets/logos/kafe-mark.svg" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Aller au contenu</a>
+    <div class="app" id="app">
+      <!-- Menu latéral -->
+      <aside class="sidebar" aria-label="Menu">
+        <div class="sidebar-head">
+          <span class="logo" role="img" aria-label="Logo du Kafé IA"></span>
+          <span class="brand label" data-app-name>Avant l'IA</span>
+          <button class="icon-button collapse-button" id="toggle-sidebar" type="button" aria-expanded="true" aria-controls="app" title="Replier le menu">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="sr-only">Replier ou déplier le menu</span>
+          </button>
+        </div>
+
+        <nav class="nav" role="tablist" aria-label="Sections" aria-orientation="vertical">
+          <button role="tab" id="tab-clean" aria-controls="panel-clean" aria-selected="true" title="Nettoyer">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h9M4 17h12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="15" y="10" width="6" height="4" rx="1" fill="currentColor"/></svg>
+            <span class="label">Nettoyer</span>
+          </button>
+          <button role="tab" id="tab-restore" aria-controls="panel-restore" aria-selected="false" tabindex="-1" title="Remettre les vrais noms">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="label">Remettre les vrais noms</span>
+          </button>
+          <button role="tab" id="tab-how" aria-controls="panel-how" aria-selected="false" tabindex="-1" title="Comment ça marche">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14M12 17.2v.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="label">Comment ça marche</span>
+          </button>
+          <button role="tab" id="tab-limits" aria-controls="panel-limits" aria-selected="false" tabindex="-1" title="Limites">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3l9 16H3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v4M12 17v.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="label">Limites</span>
+          </button>
+          <button role="tab" id="tab-demo" aria-controls="panel-demo" aria-selected="false" tabindex="-1" title="Démo">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.5v5l4-2.5z" fill="currentColor"/><path d="M8 21h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="label">Démo</span>
+          </button>
+        </nav>
+
+        <div class="settings label">
+          <details class="setting" open>
+            <summary>Façon de repérer</summary>
+            <fieldset class="mode">
+              <legend class="sr-only">Façon de repérer</legend>
+              <label class="choice"><input type="radio" name="mode" value="full" id="mode-full" />
+                <span><strong>Complète</strong>Repère mieux les noms, les entreprises et les lieux. Télécharge <span id="model-size">115 Mo</span> la première fois, puis les garde sur cet ordinateur.</span></label>
+              <label class="choice"><input type="radio" name="mode" value="fast" id="mode-fast" checked />
+                <span><strong>Rapide</strong>Rien à télécharger. Certains noms peuvent passer.</span></label>
+            </fieldset>
+          </details>
+          <details class="setting" id="always-mask-box">
+            <summary>Toujours masquer</summary>
+            <label for="always-mask" class="setting-help">Le nom de votre entreprise, de vos clients, de vos produits. Un par ligne.</label>
+            <textarea id="always-mask" rows="4" spellcheck="false"></textarea>
+            <p class="setting-help">Gardé dans ce navigateur pour vos prochaines visites. Envoyé nulle part. Videz la zone pour l'effacer.</p>
+          </details>
+        </div>
+
+        <div class="sidebar-foot">
+          <p class="net-status" id="net-status" role="status" aria-live="polite"></p>
+          <p class="credit label">Un outil gratuit du Kafé IA Finistère. <a id="source-link" href="https://github.com/cladjidane/avant-l-ia" rel="noopener noreferrer">Code ouvert sur GitHub.</a></p>
+        </div>
+      </aside>
+
+      <main id="main" class="workspace">
+        <!-- Nettoyer -->
+        <section id="panel-clean" class="view" role="tabpanel" aria-labelledby="tab-clean">
+          <header class="toolbar">
+            <div class="toolbar-title">
+              <h1>Nettoyer un texte</h1>
+              <p class="file-name" id="file-name" hidden></p>
+            </div>
+            <div class="toolbar-actions">
+              <label class="button ghost file-button">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Ouvrir un fichier
+                <input type="file" id="source-file" accept=".txt,.md,.csv,.docx,.xlsx,.pdf" />
+              </label>
+              <button class="button primary" id="analyze">Repérer les informations à masquer</button>
+            </div>
+          </header>
+
+          <div class="progress" id="model-progress" hidden>
+            <span id="model-progress-text">Préparation...</span>
+            <progress id="model-progress-bar" max="100" value="0"></progress>
+          </div>
+          <p class="banner error" id="analyze-error" role="alert" hidden></p>
+
+          <div class="panes">
+            <div class="pane">
+              <div class="pane-head"><h2>Texte d'origine</h2></div>
+              <div class="pane-body drop" id="drop-clean">
+                <label for="source-text" class="sr-only">Texte d'origine</label>
+                <textarea id="source-text" spellcheck="false" placeholder="Glissez un fichier ici ou collez votre texte.&#10;&#10;Formats acceptés : texte collé, .txt, .md, .csv, .docx, .xlsx, .pdf (texte seulement, pas les documents scannés)."></textarea>
+              </div>
+            </div>
+
+            <div class="pane" id="review">
+              <div class="pane-head">
+                <h2 id="review-title">Texte nettoyé</h2>
+                <button class="button ghost small" id="toggle-entries" type="button" aria-expanded="false" aria-controls="entries-panel" disabled hidden>Informations masquées <span class="count" id="entries-count">0</span></button>
+              </div>
+              <div class="pane-body result-wrap">
+                <div class="notice" id="review-notice" role="note" hidden>
+                  <strong>Relisez avant d'envoyer.</strong> L'outil peut laisser passer un nom, un poste, un lieu ou un détail qui permet de deviner de qui on parle, par exemple « le seul kiné de la commune ».
+                  <span class="notice-how">Un clic sur une étiquette remet le mot en clair. Sélectionnez un mot à la souris pour le masquer aussi.</span>
+                </div>
+                <p class="sensitive-banner" id="sensitive-banner" hidden></p>
+                <div class="precheck" id="precheck" hidden>
+                  <p class="precheck-question" id="precheck-question">Ce contenu pourrait-il être publié tel quel sur Internet ?</p>
+                  <div class="verdict" id="verdict" role="status" aria-live="polite" aria-labelledby="precheck-question">
+                    <p class="verdict-text"><strong id="verdict-headline"></strong> <span id="verdict-detail"></span></p>
+                    <p class="verdict-sensitive" id="verdict-sensitive" hidden></p>
+                    <p class="verdict-help" id="verdict-help" hidden>Un détail peut lui échapper, par exemple un poste ou un lieu qui désigne quelqu'un. Relisez avant d'envoyer.</p>
+                    <p class="verdict-pending" id="verdict-pending" hidden></p>
+                    <div class="verdict-actions">
+                      <button class="button primary" type="button" id="verdict-mask" hidden>Masquer ces informations</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="empty" id="result-empty">
+                  <p>Le texte nettoyé s'affichera ici.</p>
+                  <p>Collez votre texte, puis cliquez sur «&nbsp;Repérer les informations à masquer&nbsp;».</p>
+                </div>
+                <div class="result-text" id="result-text" tabindex="0" aria-label="Texte nettoyé. Cliquez sur une étiquette pour remettre le mot en clair, sélectionnez un mot pour le masquer aussi." hidden></div>
+                <form class="add-term" id="add-term-form" hidden>
+                  <label for="add-term" class="sr-only">Masquer aussi un mot ou un nom</label>
+                  <input type="text" id="add-term" autocomplete="off" placeholder="Masquer aussi un mot ou un nom" />
+                  <button class="button ghost small" type="submit">Masquer</button>
+                </form>
+              </div>
+            </div>
+
+            <aside class="inspector" id="entries-panel" aria-label="Informations masquées" hidden>
+              <div class="pane-head">
+                <h2>Informations masquées</h2>
+                <button class="icon-button" type="button" id="close-entries" title="Fermer">
+                  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  <span class="sr-only">Fermer la liste</span>
+                </button>
+              </div>
+              <div class="pane-body">
+                <p class="report-detail" id="report-detail"></p>
+                <p class="hint">Cliquez sur une ligne pour remettre la valeur en clair. Cliquez de nouveau pour la masquer.</p>
+                <ul class="entries" id="entries-body"></ul>
+              </div>
+            </aside>
+          </div>
+
+          <footer class="actionbar" id="export">
+            <p class="report" id="report" aria-live="polite">Aucune analyse pour l'instant.</p>
+            <label class="confirm"><input type="checkbox" id="reviewed" disabled /> <span id="reviewed-label">J'ai relu le texte nettoyé</span></label>
+            <div class="actions">
+              <button class="button primary" id="copy-clean" disabled>Copier</button>
+              <button class="button ghost" id="download-clean" disabled>Télécharger</button>
+              <button class="button ghost" id="download-clean-txt" disabled hidden>En texte (.txt)</button>
+              <span class="divider" aria-hidden="true"></span>
+              <button class="button ghost key" id="download-table" disabled title="Gardez ce fichier pour vous. Ne l'envoyez jamais à l'IA.">Table de correspondance (.csv)</button>
+            </div>
+            <p class="actionbar-note"><span class="done" id="copy-done" role="status" aria-live="polite"></span><span id="export-note" hidden></span><span class="keep">La table relie chaque étiquette à sa vraie valeur. Gardez-la pour vous. Ne l'envoyez jamais à l'IA.</span></p>
+          </footer>
+          <button class="button floating" id="mask-selection" hidden>Masquer aussi ce mot</button>
+          <div class="popover" id="sensitive-pop" role="dialog" aria-label="Information sensible" hidden>
+            <p id="sensitive-msg"></p>
+            <div class="popover-actions">
+              <button class="button primary small" id="sensitive-mask">Masquer aussi ce mot</button>
+              <button class="button ghost small" id="sensitive-close">Fermer</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Remettre les vrais noms -->
+        <section id="panel-restore" class="view" role="tabpanel" aria-labelledby="tab-restore" hidden>
+          <header class="toolbar">
+            <div class="toolbar-title">
+              <h1>Remettre les vrais noms</h1>
+              <p class="file-name" id="table-status"></p>
+            </div>
+            <div class="toolbar-actions">
+              <label class="button ghost file-button">
+                Charger une table (.csv)
+                <input type="file" id="table-file" accept=".csv,text/csv" />
+              </label>
+              <label class="button ghost file-button">
+                Ouvrir la réponse (.docx, .txt)
+                <input type="file" id="ai-file" accept=".txt,.md,.docx" />
+              </label>
+            </div>
+          </header>
+          <p class="banner error" id="restore-error" role="alert" hidden></p>
+
+          <div class="panes restore-panes">
+            <div class="pane">
+              <div class="pane-head"><h2>Réponse de l'IA</h2><p class="file-name" id="ai-file-name" hidden></p></div>
+              <div class="pane-body drop" id="drop-restore">
+                <label for="ai-text" class="sr-only">Réponse de l'IA</label>
+                <textarea id="ai-text" spellcheck="false" placeholder="Collez la réponse de l'IA ici, ou glissez un fichier .docx ou .txt."></textarea>
+              </div>
+            </div>
+            <div class="pane fields-pane">
+              <div class="pane-head"><h2>À remplir</h2><span class="count" id="fields-count" hidden></span></div>
+              <div class="pane-body">
+                <div class="empty" id="fields-empty">
+                  <p>Collez la réponse de l'IA. Chaque étiquette apparaîtra ici avec sa valeur, que vous pouvez corriger.</p>
+                </div>
+                <form id="fields" class="fields" hidden>
+                  <fieldset id="fields-tool">
+                    <legend>Étiquettes de l'outil</legend>
+                    <div class="field-list" id="fields-tool-list"></div>
+                  </fieldset>
+                  <fieldset id="fields-ai">
+                    <legend>À compléter, ajouté par l'IA</legend>
+                    <p class="field-hint">L'IA a laissé ces trous à remplir. Tapez la valeur, ou laissez vide.</p>
+                    <div class="field-list" id="fields-ai-list"></div>
+                  </fieldset>
+                  <p class="field-hint" id="fields-absent" hidden></p>
+                </form>
+              </div>
+            </div>
+            <div class="pane">
+              <div class="pane-head"><h2>Avec les vrais noms</h2></div>
+              <div class="pane-body result-wrap">
+                <div class="empty" id="restore-empty">
+                  <p>Le texte avec les vrais noms s'affichera ici.</p>
+                </div>
+                <div id="restore-result" hidden>
+                  <div class="result-text" id="restored-text" tabindex="0" aria-label="Texte avec les vrais noms"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer class="actionbar">
+            <p class="report" id="restore-report" aria-live="polite"></p>
+            <div class="actions">
+              <button class="button primary" id="copy-restored" disabled>Copier</button>
+              <button class="button ghost" id="download-restored" disabled>Télécharger</button>
+            </div>
+            <p class="actionbar-note"><span class="done" id="restore-done" role="status" aria-live="polite"></span></p>
+          </footer>
+        </section>
+
+        <!-- Comment ça marche -->
+        <section id="panel-how" class="view" role="tabpanel" aria-labelledby="tab-how" hidden>
+          <header class="toolbar"><div class="toolbar-title"><h1>Comment ça marche</h1></div></header>
+          <div class="reading">
+            <ol class="steps">
+              <li>Vous collez un texte ou vous déposez un document, et l'outil le lit sur votre ordinateur, sans rien envoyer sur internet.</li>
+              <li>Il repère les informations confidentielles (noms, entreprises, adresses, numéros de téléphone, mails, numéros de compte, montants et dates) et il les masque derrière des étiquettes comme [PERSONNE_1].</li>
+              <li>Vous relisez, vous remettez en clair ce qui n'a pas besoin d'être caché et vous masquez ce qui a échappé à l'outil.</li>
+              <li>Vous envoyez le texte nettoyé à l'IA de votre choix et vous gardez pour vous la table qui relie chaque étiquette à sa vraie valeur.</li>
+              <li>Quand l'IA vous répond, vous collez sa réponse dans « Remettre les vrais noms ». L'outil remplace les étiquettes par les vrais noms et vous laisse compléter ce que l'IA a laissé à remplir.</li>
+            </ol>
+            <h2>La question posée avant le masquage</h2>
+            <p>Dès que vous collez un texte ou ouvrez un fichier, l'outil répond à la question « Ce contenu pourrait-il être publié tel quel sur Internet ? ». C'est la question que posent le guide de l'État et la CNIL avant d'envoyer un contenu à une IA. Si l'outil ne repère rien, il répond « Oui, a priori ». S'il repère des noms, des coordonnées, des chiffres ou des mots de santé, il répond « Non » et propose de les masquer. Sources : Guide d'usage de l'IA pour les agents publics de l'État, principe 2, et CNIL, questions-réponses sur l'IA générative, question 7 (consultés le 8 novembre 2026).</p>
+          </div>
+        </section>
+
+        <!-- Démo -->
+        <section id="panel-demo" class="view" role="tabpanel" aria-labelledby="tab-demo" hidden>
+          <header class="toolbar"><div class="toolbar-title"><h1>Démo</h1><p class="file-name">Cas fictifs pour la démonstration. Tous les noms sont inventés.</p></div></header>
+          <div class="reading"><ol class="demo-list" id="demo-list"></ol></div>
+        </section>
+
+        <!-- Limites -->
+        <section id="panel-limits" class="view" role="tabpanel" aria-labelledby="tab-limits" hidden>
+          <header class="toolbar"><div class="toolbar-title"><h1>Limites</h1></div></header>
+          <div class="reading">
+            <dl class="limits">
+              <dt>L'outil peut oublier des informations.</dt>
+              <dd>Il repère ce qui ressemble à un nom, un numéro ou une adresse. Il peut en oublier, surtout les noms rares, les surnoms et les fautes de frappe.</dd>
+              <dt>Un détail peut suffire à reconnaître quelqu'un.</dt>
+              <dd>Un poste, un lieu, une date ou une situation (« le seul kiné de la commune », « la gérante de la boulangerie de la place ») ne sont pas des noms, et l'outil ne les repère pas. Reformulez-les vous-même.</dd>
+              <dt>Un texte masqué reste un texte qui permet de retrouver les personnes.</dt>
+              <dd>Remplacer un nom par une étiquette s'appelle pseudonymiser. Tant que la table de correspondance existe, on peut retrouver les vraies personnes : au sens du RGPD, le texte contient encore des données personnelles. Anonymiser, au sens de la loi, voudrait dire que plus personne, même vous, ne puisse remonter aux personnes. L'outil ne rend donc pas un texte anonyme. Il réduit ce que l'IA voit.</dd>
+              <dt>La relecture humaine est obligatoire.</dt>
+              <dd>C'est pour cela que l'outil vous demande de cocher « J'ai relu le texte nettoyé » avant de copier ou de télécharger.</dd>
+              <dt>Les documents scannés ne sont pas lus.</dt>
+              <dd>Un PDF qui est une photo de page ne contient pas de texte que l'outil peut lire.</dd>
+              <dt>Rien ne sort de votre ordinateur.</dt>
+              <dd>Le texte n'est envoyé à aucun serveur. Seul le fichier de la façon « Complète » est téléchargé une fois depuis le site Hugging Face, puis gardé par votre navigateur.</dd>
+            </dl>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

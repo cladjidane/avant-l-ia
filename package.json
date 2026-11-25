@@ -1,0 +1,30 @@
+{
+  "name": "avant-l-ia",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Nettoie un texte ou un document avant de l'envoyer à une IA, puis remet les vrais noms dans la réponse.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "fixtures": "node scripts/make-fixtures.mjs",
+    "mcp:build": "rolldown -c mcp/rolldown.config.mjs"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "vitest": "5.1.1"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.2",
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@xmldom/xmldom": "0.9.12",
+    "jszip": "3.10.2",
+    "onnxruntime-web": "1.31.0-dev.20260914-8d85527a0",
+    "pdfjs-dist": "6.5.438",
+    "zod": "4.6.7"
+  }
+}

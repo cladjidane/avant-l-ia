@@ -1,0 +1,7 @@
+À partir de ce message à mon équipe, rédige un mail court à envoyer aux clients de [PERSONNE_1] pour les prévenir de son absence et leur présenter la personne qui le remplace. Garde les éléments entre crochets tels quels.
+
+Bonjour à tous,
+[PERSONNE_1], notre commercial sur le [PERSONNE_2], est [AUTRE_1] depuis lundi après son [AUTRE_2]. Il sera absent jusqu'à mi-décembre.
+[PERSONNE_3] reprend ses clients pendant son absence. Elle est joignable au [TELEPHONE_1].
+Merci de ne pas appeler [PERSONNE_4], sa femme nous donnera des nouvelles.
+[PERSONNE_5]

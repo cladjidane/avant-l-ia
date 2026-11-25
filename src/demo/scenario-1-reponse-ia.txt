@@ -1,0 +1,28 @@
+Voici une version plus professionnelle de votre email avec un échéancier clair pour le paiement en trois fois :
+
+---
+
+Objet : Confirmation de devis et modalités de paiement
+
+Bonjour [PERSONNE_1],
+
+Suite à notre rencontre du mardi [DATE] chez [ENTREPRISE_1] à [LIEU_1], je vous confirme par ce mail le devis s’élevant à [MONTANT_1] pour la fourniture et la pose des fenêtres de la maison de M. [PERSONNE_2], située au [ADRESSE_1].
+
+Comme convenu avec son fils, M. [PERSONNE_2], kinésithérapeute de la commune, nous avons établi un échéancier de paiement en trois fois, selon les modalités suivantes :
+
+1. **Premier versement** : [MONTANT_1/3] à régler avant le [DATE_1] (date de début des travaux)
+2. **Deuxième versement** : [MONTANT_1/3] à régler avant le [DATE_2] (date d’avancement des travaux)
+3. **Troisième versement** : [MONTANT_1/3] à régler avant le [DATE_3] (date de réception des travaux)
+
+N’hésitez pas à me contacter pour toute question ou précision supplémentaire, par téléphone au [TELEPHONE_1] ou par email à l’adresse [EMAIL_1].
+
+Dans l’attente de votre retour, je vous prie d’agréer, [PERSONNE_1], l’expression de mes salutations distinguées.
+
+Cordialement,
+[PERSONNE_3]
+Gérant
+[ENTREPRISE_1]
+
+---
+
+N'hésitez pas à adapter les dates et les montants selon vos besoins.

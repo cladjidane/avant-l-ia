@@ -1,0 +1,5 @@
+Reformule ce mail pour qu'il soit plus professionnel, et propose un échéancier clair pour le paiement en trois fois. Garde les éléments entre crochets tels quels.
+
+Bonjour [PERSONNE_1],
+Suite à notre rendez-vous de mardi chez [ENTREPRISE_1] à [LIEU_1], je vous confirme le devis de [MONTANT_1] pour les fenêtres de la maison de M. [PERSONNE_2], [ADRESSE_1]. Son fils, qui est le seul kiné de la commune, souhaite un paiement en trois fois. Vous pouvez me joindre au [TELEPHONE_1] ou à [EMAIL_1].
+[PERSONNE_3], gérant

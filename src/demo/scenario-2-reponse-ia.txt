@@ -1,0 +1,20 @@
+Voici un modèle de mail court pour les clients de [PERSONNE_1] :
+
+---
+
+**Objet : Absence de [PERSONNE_1] et remplacement**
+
+Bonjour,
+
+Je tenais à vous informer que [PERSONNE_1], votre commercial habituel sur le [PERSONNE_2], est [AUTRE_1] depuis lundi après son [AUTRE_2]. Il sera absent jusqu'à mi-décembre.
+
+Pendant cette période, [PERSONNE_3] assurera le suivi de vos dossiers. Vous pouvez la contacter au [TELEPHONE_1].
+
+Nous vous remercions de votre compréhension et restons à votre disposition pour toute question.
+
+Cordialement,
+[PERSONNE_5]
+
+---
+
+N'hésitez pas à adapter ce modèle selon vos besoins.
